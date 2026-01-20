@@ -1,7 +1,13 @@
 // services/api.js - Base API configuration
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+const getBaseUrl = () => {
+  let url = import.meta.env.VITE_API_URL || '';
+  if (!url) return '/api';
+  return url.endsWith('/api') ? url : `${url.replace(/\/$/, '')}/api`;
+};
+
+const API_BASE_URL = getBaseUrl();
 
 // Create axios instance
 const api = axios.create({

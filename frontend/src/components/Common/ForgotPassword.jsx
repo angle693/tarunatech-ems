@@ -7,7 +7,9 @@ import axios from 'axios';
 
 // Create axios instance
 const API = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_URL ?
+    (import.meta.env.VITE_API_URL.endsWith('/api') ? import.meta.env.VITE_API_URL : `${import.meta.env.VITE_API_URL.replace(/\/$/, '')}/api`)
+    : '/api',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -37,7 +39,7 @@ const ForgotPassword = () => {
     setError('');
 
     try {
-      const response = await API.post('api//auth/forgot-password', { email });
+      const response = await API.post('/auth/forgot-password', { email });
 
       if (response.data.success) {
         setSent(true);
@@ -66,7 +68,7 @@ const ForgotPassword = () => {
     setError('');
 
     try {
-      const response = await API.post('/api/auth/forgot-password', { email });
+      const response = await API.post('/auth/forgot-password', { email });
 
       if (response.data.success) {
         setCountdown(60); // Reset countdown
