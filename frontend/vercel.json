@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/auth/:path*",
+      "destination": "https://tarunatech-ems.onrender.com/api/auth/:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://tarunatech-ems.onrender.com/api/:path*"
     }
   ]
 }
