@@ -35,10 +35,10 @@ const ForgotPassword = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    
+
     try {
-      const response = await API.post('/auth/forgot-password', { email });
-      
+      const response = await API.post('api//auth/forgot-password', { email });
+
       if (response.data.success) {
         setSent(true);
         setCountdown(60); // 60 seconds before allowing resend
@@ -48,7 +48,7 @@ const ForgotPassword = () => {
       const errorMessage = error.response?.data?.message || 'Failed to send reset link. Please try again.';
       setError(errorMessage);
       toast.error(errorMessage);
-      
+
       // If rate limited, show countdown
       if (error.response?.status === 429) {
         const retryAfter = error.response?.data?.retryAfter || 900; // 15 minutes default
@@ -61,13 +61,13 @@ const ForgotPassword = () => {
 
   const handleResendEmail = async () => {
     if (countdown > 0) return;
-    
+
     setLoading(true);
     setError('');
-    
+
     try {
-      const response = await API.post('/auth/forgot-password', { email });
-      
+      const response = await API.post('/api/auth/forgot-password', { email });
+
       if (response.data.success) {
         setCountdown(60); // Reset countdown
         toast.success('Reset link sent again!');
@@ -76,7 +76,7 @@ const ForgotPassword = () => {
       const errorMessage = error.response?.data?.message || 'Failed to resend link.';
       setError(errorMessage);
       toast.error(errorMessage);
-      
+
       if (error.response?.status === 429) {
         const retryAfter = error.response?.data?.retryAfter || 900;
         setCountdown(retryAfter);
@@ -115,12 +115,12 @@ const ForgotPassword = () => {
             </div>
             <h2 className="text-2xl font-bold text-white mb-2">Check Your Email</h2>
             <p className="text-secondary-400 mb-4">
-              We've sent a password reset link to 
+              We've sent a password reset link to
             </p>
             <p className="text-neon-pink font-medium mb-6 break-all">
               {email}
             </p>
-            
+
             <div className="bg-secondary-800/30 rounded-lg p-4 mb-6 text-left">
               <h3 className="text-white font-medium mb-2 flex items-center">
                 <Clock className="w-4 h-4 mr-2" />
@@ -155,7 +155,7 @@ const ForgotPassword = () => {
                   'Resend Email'
                 )}
               </button>
-              
+
               <Link
                 to="/login"
                 className="inline-flex items-center text-neon-pink hover:text-neon-purple transition-colors duration-300"

@@ -43,7 +43,7 @@ const Login = () => {
       });
 
       // Use the centralized api instance
-      const response = await api.post('/auth/login', loginData);
+      const response = await api.post('/api/auth/login', loginData);
 
       if (response.data.success) {
         // Extract department name - handle various response formats
