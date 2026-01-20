@@ -1,15 +1,14 @@
 import axios from 'axios';
 
-const BASE_URL = '/api';
-
 const api = axios.create({
-    baseURL: BASE_URL,
+    baseURL: import.meta.env.tarunatech-ems-4q4k.vercel.app, // BACKEND URL
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     },
-    withCredentials: true
+    withCredentials: true,
 });
 
+// Attach token automatically
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');
