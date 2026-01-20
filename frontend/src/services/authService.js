@@ -5,7 +5,7 @@ export const authService = {
   // Login user
   login: async (credentials) => {
     try {
-      const response = await api.post('/api/auth/login', credentials);
+      const response = await api.post('/auth/login', credentials);
       const { token, user } = response.data;
 
       // Store token and user data
@@ -21,7 +21,7 @@ export const authService = {
   // Register user (Admin only)
   register: async (userData) => {
     try {
-      const response = await api.post('/api/auth/register', userData);
+      const response = await api.post('/auth/register', userData);
       return response.data;
     } catch (error) {
       throw error.response?.data || { message: 'Registration failed' };
@@ -31,7 +31,7 @@ export const authService = {
   // Forgot password
   forgotPassword: async (email) => {
     try {
-      const response = await api.post('/api/auth/forgot-password', { email });
+      const response = await api.post('/auth/forgot-password', { email });
       return response.data;
     } catch (error) {
       throw error.response?.data || { message: 'Request failed' };
@@ -91,7 +91,7 @@ export const authService = {
   // Logout
   logout: async () => {
     try {
-      await api.post('api/auth/logout');
+      await api.post('/auth/logout');
     } catch (error) {
       // Even if API call fails, clear local storage
     } finally {
@@ -123,7 +123,7 @@ export const authService = {
   // Initialize admin
   initializeAdmin: async () => {
     try {
-      const response = await api.post('api//auth/init-admin');
+      const response = await api.post('/auth/init-admin');
       return response.data;
     } catch (error) {
       throw error.response?.data || { message: 'Admin initialization failed' };

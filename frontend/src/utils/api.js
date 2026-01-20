@@ -3,7 +3,16 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 // Create axios instance with base URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const getBaseUrl = () => {
+  let url = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+  // Ensure it ends with /api
+  if (!url.endsWith('/api')) {
+    url = `${url.replace(/\/$/, '')}/api`;
+  }
+  return url;
+};
+
+const API_BASE_URL = getBaseUrl();
 
 const API = axios.create({
   baseURL: API_BASE_URL,
@@ -302,17 +311,17 @@ export const leadAPI = {
 
 // Auth API calls
 export const authAPI = {
-  login: (loginData) => API.post('/api/auth/login', loginData),
-  logout: () => API.post('/api/auth/logout'),
-  getProfile: () => API.get('/api/auth/profile'),
-  getMyProfile: () => API.get('/api/auth/me'),
-  updateProfile: (profileData) => API.put('/api/auth/profile', profileData),
-  changePassword: (passwordData) => API.put('/api/auth/change-password', passwordData),
-  updateProfileImage: (formData) => API.post('/api/auth/upload-profile-image', formData, {
+  login: (loginData) => API.post('/auth/login', loginData),
+  logout: () => API.post('/auth/logout'),
+  getProfile: () => API.get('/auth/profile'),
+  getMyProfile: () => API.get('/auth/me'),
+  updateProfile: (profileData) => API.put('/auth/profile', profileData),
+  changePassword: (passwordData) => API.put('/auth/change-password', passwordData),
+  updateProfileImage: (formData) => API.post('/auth/upload-profile-image', formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   }),
-  forgotPassword: (email) => API.post('/api/auth/forgot-password', { email }),
-  resetPassword: (token, password) => API.put(`/api/auth/reset-password/${token}`, { password }),
+  forgotPassword: (email) => API.post('/auth/forgot-password', { email }),
+  resetPassword: (token, password) => API.put(`/auth/reset-password/${token}`, { password }),
 
   // Alternative endpoint that checks both user and employee data
   getCurrentUser: async () => {
